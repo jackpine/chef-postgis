@@ -3,8 +3,7 @@ execute 'create_postgis_template' do
   user 'postgres'
   command <<CMD
 (createdb -E UTF8 --locale=#{node['postgis']['locale']} #{node['postgis']['template_name']} -T template0) &&
-(psql -d #{node['postgis']['template_name']} -f `pg_config --sharedir`/contrib/postgis-2.0/postgis.sql) &&
-(psql -d #{node['postgis']['template_name']} -f `pg_config --sharedir`/contrib/postgis-2.0/spatial_ref_sys.sql)
+(psql -d #{node['postgis']['template_name']} --command="CREATE EXTENSION postgis" )
 CMD
   action :run
 end
